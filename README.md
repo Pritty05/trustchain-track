@@ -1,37 +1,52 @@
-# TrustChain Pay 🚀
+# TrustChain Track 🔗
 
-A decentralized payment dApp built on the Stellar blockchain testnet.
+A multi-wallet Stellar dApp with smart contract integration built for Level 2.
 
 ## 🌐 Live Demo
-👉 https://trustchain-pay.vercel.app
+👉 https://trustchain-track.vercel.app
 
 ## 📌 Project Description
-TrustChain Pay enables users to connect their Stellar wallet, view their XLM balance, and send XLM transactions on the Stellar testnet. It provides transparent payment verification through transaction hashes and real-time blockchain confirmation.
+TrustChain Track is an upgraded Stellar blockchain dApp that supports multiple wallets, handles 3 error types, integrates a smart contract, and provides real-time transaction tracking with a live activity feed.
 
 ## 🛠️ Tech Stack
 - React + Vite
 - Stellar SDK
 - Freighter Wallet API
 - Stellar Testnet (Horizon)
+- Soroban RPC (Smart Contract)
 
 ## ✨ Features
-- Connect/Disconnect Freighter wallet
-- Display real-time XLM balance
-- Send XLM to any Stellar address
-- Transaction success/failure feedback
-- Transaction hash display
-- View transaction on Stellar Explorer
+- Multi-wallet support (Freighter, xBull, Albedo)
+- 3 error types handled
+- Smart contract integration
+- Real-time XLM balance
+- Send XLM transactions
+- Transaction status (⏳ Pending → ✅ Success → ❌ Failed)
+- Transaction hash + Stellar Explorer link
+- Live Activity Feed
+- Disconnect wallet
+
+## ⚠️ Error Handling
+- Error Type 1: Account not found on testnet
+- Error Type 2: Wallet extension not installed
+- Error Type 3: User rejected wallet connection
+
+## 📜 Smart Contract
+- Contract ID: CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCN4
+- Network: Stellar Testnet
+- Called from frontend via Soroban RPC
 
 ## 🚀 Setup Instructions
 
 1. Clone the repository:
-git clone https://github.com/Pritty05/trustchain-pay.git
+   git clone https://github.com/Pritty05/trustchain-track.git
 
 2. Install dependencies:
-cd trustchain-pay
-npm install
+   cd trustchain-track
+   npm install
 
-3. Run the app: npm run dev
+3. Run the app:
+   npm run dev
 
 4. Open browser at http://localhost:5173
 
@@ -41,25 +56,24 @@ npm install
 
 ## 📸 Screenshots
 
-### 1. Connect Wallet Button
-![Connect Wallet](Level-1%20Screenshots/connect-wallet.jpg)
+### 1. Wallet Options
+![Wallet Options](level-2-screenshots/wallet-options.jpg.jpg)
 
-### 2. Wallet Connected + Balance
-![Wallet Connected](Level-1%20Screenshots/wallet-connected.jpg)
+### 2. Error Handling
+![Error Handling](level-2-screenshots/error-handling.jpg.jpg)
 
-### 3. Send XLM Form
-![Send XLM](Level-1%20Screenshots/send-xlm.jpg)
+### 3. Error Rejected
+![Error Rejected](level-2-screenshots/error-rejected.jpg.jpg)
 
-### 4. Transaction Successful
-![Transaction Success](Level-1%20Screenshots/transaction-success.jpg)
+### 4. Wallet Connected
+![Wallet Connected](level-2-screenshots/wallet-connected.jpg.jpg)
 
-### 5. Stellar Explorer Confirmation
-![Stellar Explorer](Level-1%20Screenshots/stellar-explorer.jpg)
+### 5. Smart Contract Called
+![Contract Called](level-2-screenshots/contract-called.jpg.jpg)
+
+### 6. Transaction Success
+![Transaction Success](level-2-screenshots/transaction-success.jpg.jpg)
 
 ## 🔗 Testnet Transaction Proof
-
-Transaction Hash:
-157237fd3f964bc0044eaaf724ea812bf190d4272f0b400312bd8639166c80b5
-
 View on Stellar Explorer:
-https://stellar.expert/explorer/testnet/tx/157237fd3f964bc0044eaaf724ea812bf190d4272f0b400312bd8639166c80b5
+https://stellar.expert/explorer/testnet
