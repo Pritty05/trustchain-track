@@ -7,11 +7,14 @@ import {
   Asset,
   BASE_FEE,
   Account,
+  Contract,
+  nativeToScVal,
+  xdr,
 } from "stellar-sdk";
 
 const HORIZON_URL = "https://horizon-testnet.stellar.org";
 const RPC_URL = "https://soroban-testnet.stellar.org";
-const CONTRACT_ID = "CDZZQYUKOSTHDOUCU273NHRVYJ67A37JC5SL3JAOJ77FUT4KGQXSJBUI";
+const CONTRACT_ID = "CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCN4";
 
 const SUPPORTED_WALLETS = [
   { id: "freighter", name: "Freighter", icon: "⚡" },
@@ -74,6 +77,7 @@ function App() {
 
       const result = await requestAccess();
       const publicKey = result.address || result;
+
       if (!publicKey) throw new Error("User rejected wallet access");
 
       setWallet(publicKey);
@@ -133,6 +137,7 @@ function App() {
         .build();
 
       addEvent("✍️ Waiting for wallet signature...");
+
       const signResult = await signTransaction(transaction.toXDR(), {
         networkPassphrase: Networks.TESTNET,
       });
@@ -178,6 +183,7 @@ function App() {
       setContractResult("⏳ Calling contract...");
       addEvent("📜 Calling smart contract...");
 
+      // Call contract via Soroban RPC simulate
       const response = await fetch(RPC_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -192,7 +198,11 @@ function App() {
       const data = await response.json();
       const ledger = data.result?.sequence;
 
-      setContractResult(`✅ Contract called successfully!\n📋 Contract ID: ${CONTRACT_ID}\n📦 Latest Ledger: ${ledger}\n🌐 Network: Stellar Testnet`);
+      setContractResult(`✅ Contract called successfully!
+📋 Contract ID: ${CONTRACT_ID}
+📦 Latest Ledger: ${ledger}
+🌐 Network: Stellar Testnet`);
+
       addEvent(`✅ Contract called! Ledger: ${ledger}`);
 
     } catch (err) {
@@ -204,130 +214,146 @@ function App() {
   };
 
   return (
-    <div style={{ minHeight: "100vh", background: "#f8fafc", fontFamily: "'Segoe UI', Arial, sans-serif" }}>
-      
-      {/* Header */}
-      <div style={{ background: "linear-gradient(135deg, #6366f1, #8b5cf6)", padding: "32px 20px", textAlign: "center", color: "white" }}>
-        <h1 style={{ margin: 0, fontSize: "28px", fontWeight: "bold" }}>🔗 TrustChain Track</h1>
-        <p style={{ margin: "8px 0 0 0", opacity: 0.9 }}>Level 2 — Multi-Wallet Stellar dApp</p>
-      </div>
+    <div style={{ fontFamily: "Arial", maxWidth: "600px", margin: "0 auto", padding: "20px" }}>
+      <h1 style={{ textAlign: "center" }}>🔗 TrustChain Track</h1>
+      <p style={{ textAlign: "center", color: "gray" }}>Level 2 — Multi-Wallet Stellar dApp</p>
 
-      <div style={{ maxWidth: "650px", margin: "0 auto", padding: "24px 16px" }}>
-
-        {/* Error Banner */}
-        {error && (
-          <div style={{ background: "#fff0f0", border: "1px solid #ffcccc", borderRadius: "12px", padding: "12px 16px", marginBottom: "16px", color: "#cc0000" }}>
-            {error}
-          </div>
-        )}
-
-        {/* Wallet Modal */}
-        {showWalletModal && (
-          <div style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, background: "rgba(0,0,0,0.6)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000 }}>
-            <div style={{ background: "white", borderRadius: "16px", padding: "28px", width: "320px", boxShadow: "0 20px 60px rgba(0,0,0,0.3)" }}>
-              <h3 style={{ margin: "0 0 20px 0", textAlign: "center" }}>🔌 Select Wallet</h3>
-              {SUPPORTED_WALLETS.map(w => (
-                <button key={w.id} onClick={() => connectWallet(w.id)}
-                  style={{ width: "100%", padding: "14px", marginBottom: "10px", background: w.id === "freighter" ? "#f0f0ff" : "#f9fafb", border: w.id === "freighter" ? "2px solid #6366f1" : "1px solid #ddd", borderRadius: "10px", cursor: "pointer", fontSize: "15px", textAlign: "left", fontWeight: "500" }}>
-                  {w.icon} {w.name}
-                  {w.id === "freighter" && <span style={{ fontSize: "11px", color: "#6366f1", marginLeft: "8px" }}>(recommended)</span>}
-                  {w.id !== "freighter" && <span style={{ fontSize: "11px", color: "gray", marginLeft: "8px" }}>(not installed)</span>}
-                </button>
-              ))}
-              <button onClick={() => setShowWalletModal(false)}
-                style={{ width: "100%", padding: "10px", background: "#eee", border: "none", borderRadius: "10px", cursor: "pointer", marginTop: "5px" }}>
-                Cancel
-              </button>
-            </div>
-          </div>
-        )}
-
-        {/* Wallet Section */}
-        <div style={{ background: "white", border: "1px solid #e2e8f0", borderRadius: "12px", padding: "20px", marginBottom: "16px", boxShadow: "0 2px 8px rgba(0,0,0,0.06)" }}>
-          {!wallet ? (
-            <div style={{ textAlign: "center", padding: "20px 0" }}>
-              <button onClick={() => setShowWalletModal(true)} disabled={loading}
-                style={{ padding: "14px 40px", fontSize: "16px", background: "linear-gradient(135deg, #6366f1, #8b5cf6)", color: "white", border: "none", borderRadius: "12px", cursor: "pointer", fontWeight: "600" }}>
-                {loading ? "Connecting..." : "🔌 Connect Wallet"}
-              </button>
-              <p style={{ color: "gray", fontSize: "13px", marginTop: "10px" }}>Supports Freighter, xBull, Albedo</p>
-            </div>
-          ) : (
-            <div>
-              <p style={{ margin: "0 0 5px 0", color: "#6366f1", fontWeight: "600" }}>✅ Connected via {selectedWallet}</p>
-              <p style={{ wordBreak: "break-all", fontSize: "12px", color: "#888", margin: "5px 0", background: "#f8fafc", padding: "8px", borderRadius: "6px" }}>{wallet}</p>
-              <p style={{ fontSize: "28px", margin: "12px 0", fontWeight: "bold" }}>{parseFloat(balance).toFixed(2)} <span style={{ color: "#6366f1", fontSize: "16px" }}>XLM</span></p>
-              <button onClick={disconnectWallet}
-                style={{ padding: "8px 18px", background: "#ff4444", color: "white", border: "none", borderRadius: "8px", cursor: "pointer" }}>
-                Disconnect
-              </button>
-            </div>
-          )}
+      {error && (
+        <div style={{ background: "#fff0f0", border: "1px solid #ffcccc",
+          borderRadius: "8px", padding: "12px", marginBottom: "15px", color: "#cc0000" }}>
+          {error}
         </div>
+      )}
 
-        {wallet && (
-          <>
-            {/* Smart Contract */}
-            <div style={{ background: "white", border: "2px solid #6366f1", borderRadius: "12px", padding: "20px", marginBottom: "16px", boxShadow: "0 2px 8px rgba(99,102,241,0.1)" }}>
-              <h3 style={{ margin: "0 0 8px 0", color: "#6366f1" }}>📜 Smart Contract</h3>
-              <p style={{ fontSize: "12px", color: "#888", margin: "0 0 12px 0" }}>ID: {CONTRACT_ID.slice(0, 25)}...</p>
-              <button onClick={callContract} disabled={contractLoading}
-                style={{ width: "100%", padding: "12px", background: "linear-gradient(135deg, #6366f1, #8b5cf6)", color: "white", border: "none", borderRadius: "8px", fontSize: "15px", cursor: "pointer", fontWeight: "600" }}>
-                {contractLoading ? "⏳ Calling..." : "⚡ Call Contract"}
+      {showWalletModal && (
+        <div style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0,
+          background: "rgba(0,0,0,0.5)", display: "flex",
+          alignItems: "center", justifyContent: "center", zIndex: 1000 }}>
+          <div style={{ background: "white", borderRadius: "12px", padding: "24px", width: "300px" }}>
+            <h3 style={{ margin: "0 0 15px 0" }}>Select Wallet</h3>
+            {SUPPORTED_WALLETS.map(w => (
+              <button key={w.id} onClick={() => connectWallet(w.id)}
+                style={{ width: "100%", padding: "12px", marginBottom: "10px",
+                  background: "#f9fafb", border: "1px solid #ddd",
+                  borderRadius: "8px", cursor: "pointer", fontSize: "15px", textAlign: "left" }}>
+                {w.icon} {w.name}
+                {w.id !== "freighter" && (
+                  <span style={{ fontSize: "11px", color: "gray", marginLeft: "8px" }}>(not installed)</span>
+                )}
               </button>
-              {contractResult && (
-                <div style={{ marginTop: "12px", padding: "12px", background: "#f0f0ff", borderRadius: "8px", fontSize: "13px", whiteSpace: "pre-line", border: "1px solid #c7d2fe" }}>
-                  {contractResult}
+            ))}
+            <button onClick={() => setShowWalletModal(false)}
+              style={{ width: "100%", padding: "10px", background: "#eee",
+                border: "none", borderRadius: "8px", cursor: "pointer" }}>
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
+
+      {!wallet ? (
+        <div style={{ textAlign: "center", marginTop: "40px" }}>
+          <button onClick={() => setShowWalletModal(true)} disabled={loading}
+            style={{ padding: "14px 35px", fontSize: "16px", background: "#6366f1",
+              color: "white", border: "none", borderRadius: "10px", cursor: "pointer" }}>
+            {loading ? "Connecting..." : "🔌 Connect Wallet"}
+          </button>
+          <p style={{ color: "gray", fontSize: "13px", marginTop: "10px" }}>
+            Supports Freighter, xBull, Albedo
+          </p>
+        </div>
+      ) : (
+        <div>
+          {/* Wallet Info */}
+          <div style={{ border: "1px solid #ddd", borderRadius: "10px",
+            padding: "20px", marginBottom: "15px", background: "#f9fafb" }}>
+            <p style={{ margin: "0 0 5px 0" }}><b>✅ Connected via {selectedWallet}</b></p>
+            <p style={{ wordBreak: "break-all", fontSize: "12px", color: "#555", margin: "5px 0" }}>{wallet}</p>
+            <p style={{ fontSize: "22px", margin: "10px 0" }}><b>Balance:</b> {balance} XLM</p>
+            <button onClick={disconnectWallet}
+              style={{ padding: "8px 16px", background: "#ff4444",
+                color: "white", border: "none", borderRadius: "5px", cursor: "pointer" }}>
+              Disconnect
+            </button>
+          </div>
+
+          {/* Smart Contract */}
+          <div style={{ border: "1px solid #6366f1", borderRadius: "10px",
+            padding: "20px", marginBottom: "15px", background: "#fafafa" }}>
+            <h3 style={{ margin: "0 0 10px 0" }}>📜 Smart Contract</h3>
+            <p style={{ fontSize: "12px", color: "#555", margin: "0 0 10px 0" }}>
+              Contract ID: {CONTRACT_ID.slice(0, 20)}...
+            </p>
+            <button onClick={callContract} disabled={contractLoading}
+              style={{ width: "100%", padding: "10px", background: "#6366f1",
+                color: "white", border: "none", borderRadius: "5px",
+                fontSize: "15px", cursor: "pointer" }}>
+              {contractLoading ? "⏳ Calling..." : "⚡ Call Contract"}
+            </button>
+            {contractResult && (
+              <div style={{ marginTop: "10px", padding: "10px", background: "#f0f0ff",
+                borderRadius: "8px", fontSize: "13px", whiteSpace: "pre-line" }}>
+                {contractResult}
+              </div>
+            )}
+          </div>
+
+          {/* Send XLM */}
+          <div style={{ border: "1px solid #ddd", borderRadius: "10px",
+            padding: "20px", marginBottom: "15px" }}>
+            <h3 style={{ margin: "0 0 15px 0" }}>💸 Send XLM</h3>
+            <input type="text" placeholder="Recipient Address (G...)"
+              value={recipient} onChange={e => setRecipient(e.target.value)}
+              style={{ width: "100%", padding: "10px", marginBottom: "10px",
+                borderRadius: "5px", border: "1px solid #ccc", boxSizing: "border-box" }} />
+            <input type="number" placeholder="Amount (XLM)"
+              value={amount} onChange={e => setAmount(e.target.value)}
+              style={{ width: "100%", padding: "10px", marginBottom: "10px",
+                borderRadius: "5px", border: "1px solid #ccc", boxSizing: "border-box" }} />
+            <button onClick={sendXLM} disabled={sending}
+              style={{ width: "100%", padding: "12px", background: "#4CAF50",
+                color: "white", border: "none", borderRadius: "5px",
+                fontSize: "16px", cursor: "pointer" }}>
+              {sending ? "⏳ Sending..." : "Send XLM"}
+            </button>
+          </div>
+
+          {/* Transaction Status */}
+          {txStatus && (
+            <div style={{ border: "1px solid #ddd", borderRadius: "10px",
+              padding: "20px", marginBottom: "15px",
+              background: txStatus.includes("✅") ? "#f0fff0" :
+                txStatus.includes("⏳") ? "#fffbe6" : "#fff0f0" }}>
+              <h3 style={{ margin: "0 0 10px 0" }}>📊 Transaction Status</h3>
+              <p style={{ fontSize: "16px", margin: 0 }}>{txStatus}</p>
+              {txHash && (
+                <div style={{ marginTop: "10px" }}>
+                  <p style={{ margin: "5px 0" }}><b>Transaction Hash:</b></p>
+                  <p style={{ wordBreak: "break-all", fontSize: "12px", color: "#555", margin: "5px 0" }}>{txHash}</p>
+                  <a href={`https://stellar.expert/explorer/testnet/tx/${txHash}`}
+                    target="_blank" rel="noreferrer" style={{ color: "#6366f1" }}>
+                    View on Stellar Explorer →
+                  </a>
                 </div>
               )}
             </div>
-
-            {/* Send XLM */}
-            <div style={{ background: "white", border: "1px solid #e2e8f0", borderRadius: "12px", padding: "20px", marginBottom: "16px", boxShadow: "0 2px 8px rgba(0,0,0,0.06)" }}>
-              <h3 style={{ margin: "0 0 15px 0" }}>💸 Send XLM</h3>
-              <input type="text" placeholder="Recipient Address (G...)" value={recipient} onChange={e => setRecipient(e.target.value)}
-                style={{ width: "100%", padding: "12px", marginBottom: "10px", borderRadius: "8px", border: "1px solid #e2e8f0", boxSizing: "border-box", fontSize: "14px" }} />
-              <input type="number" placeholder="Amount (XLM)" value={amount} onChange={e => setAmount(e.target.value)}
-                style={{ width: "100%", padding: "12px", marginBottom: "12px", borderRadius: "8px", border: "1px solid #e2e8f0", boxSizing: "border-box", fontSize: "14px" }} />
-              <button onClick={sendXLM} disabled={sending}
-                style={{ width: "100%", padding: "13px", background: sending ? "#ccc" : "linear-gradient(135deg, #22c55e, #16a34a)", color: "white", border: "none", borderRadius: "8px", fontSize: "16px", cursor: "pointer", fontWeight: "600" }}>
-                {sending ? "⏳ Sending..." : "💸 Send XLM"}
-              </button>
-            </div>
-
-            {/* Transaction Status */}
-            {txStatus && (
-              <div style={{ background: txStatus.includes("✅") ? "#f0fff4" : txStatus.includes("⏳") ? "#fffbe6" : "#fff0f0", border: "1px solid #e2e8f0", borderRadius: "12px", padding: "20px", marginBottom: "16px", boxShadow: "0 2px 8px rgba(0,0,0,0.06)" }}>
-                <h3 style={{ margin: "0 0 10px 0" }}>📊 Transaction Status</h3>
-                <p style={{ fontSize: "16px", margin: 0 }}>{txStatus}</p>
-                {txHash && (
-                  <div style={{ marginTop: "12px" }}>
-                    <p style={{ margin: "5px 0", fontWeight: "bold" }}>Transaction Hash:</p>
-                    <p style={{ wordBreak: "break-all", fontSize: "12px", color: "#555", margin: "5px 0", background: "#f8fafc", padding: "8px", borderRadius: "6px" }}>{txHash}</p>
-                    <a href={`https://stellar.expert/explorer/testnet/tx/${txHash}`} target="_blank" rel="noreferrer" style={{ color: "#6366f1", fontWeight: "500" }}>
-                      View on Stellar Explorer →
-                    </a>
-                  </div>
-                )}
-              </div>
-            )}
-          </>
-        )}
-
-        {/* Live Activity Feed */}
-        <div style={{ background: "white", border: "1px solid #e2e8f0", borderRadius: "12px", padding: "20px", boxShadow: "0 2px 8px rgba(0,0,0,0.06)" }}>
-          <h3 style={{ margin: "0 0 12px 0" }}>⚡ Live Activity Feed</h3>
-          {events.length === 0 ? (
-            <p style={{ color: "gray", fontSize: "13px", margin: 0 }}>No activity yet...</p>
-          ) : (
-            events.map((event, i) => (
-              <div key={i} style={{ padding: "8px 0", borderBottom: "1px solid #f1f5f9", fontSize: "13px", color: "#444" }}>
-                {event}
-              </div>
-            ))
           )}
         </div>
+      )}
 
+      {/* Live Activity Feed */}
+      <div style={{ border: "1px solid #ddd", borderRadius: "10px", padding: "20px" }}>
+        <h3 style={{ margin: "0 0 10px 0" }}>⚡ Live Activity Feed</h3>
+        {events.length === 0 ? (
+          <p style={{ color: "gray", fontSize: "13px", margin: 0 }}>No activity yet...</p>
+        ) : (
+          events.map((event, i) => (
+            <div key={i} style={{ padding: "6px 0", borderBottom: "1px solid #eee",
+              fontSize: "13px", color: "#444" }}>
+              {event}
+            </div>
+          ))
+        )}
       </div>
     </div>
   );
