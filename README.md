@@ -35,7 +35,8 @@ TrustChain Track is an upgraded Stellar blockchain dApp that supports multiple w
 - Contract ID: CDZZQYUKOSTHDOUCU273NHRVYJ67A37JC5SL3JAOJ77FUT4KGQXSJBUI
 - Network: Stellar Testnet
 - Called from frontend via Soroban RPC
-- 🔗 [View Deployed Contract on Stellar Expert](https://stellar.expert/explorer/testnet/contract CDZZQYUKOSTHDOUCU273NHRVYJ67A37JC5SL3JAOJ77FUT4KGQXSJBUI)
+- 🔗 [View Deployed Contract on Stellar Expert]
+https://stellar.expert/explorer/testnet/contract CDZZQYUKOSTHDOUCU273NHRVYJ67A37JC5SL3JAOJ77FUT4KGQXSJBUI
 
 ## 🚀 Setup Instructions
 
@@ -77,7 +78,8 @@ TrustChain Track is an upgraded Stellar blockchain dApp that supports multiple w
 
 ## 🔗 Testnet Transaction Proof
 - Transaction Hash: `55da28143fc47e09bc1709a2130c449d61e58ba25256a9c5440bd198779163d8`
-- 🔗 [View on Stellar Explorer](https://stellar.expert/explorer/testnet/tx 55da28143fc47e09bc1709a2130c449d61e58ba25256a9c5440bd198779163d8)
+- 🔗 [View on Stellar Explorer]
+https://stellar.expert/explorer/testnet/tx 55da28143fc47e09bc1709a2130c449d61e58ba25256a9c5440bd198779163d8
 
 ---
 Made with ❤️ for the Stellar Community 🚀
