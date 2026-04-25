@@ -30,21 +30,22 @@ TrustChain Track is an upgraded Stellar blockchain dApp that supports multiple w
 
 ### Error Type 1: Account not found on testnet
 When wallet address doesn't exist on Stellar testnet.
-![Error Type 1](level-2-screenshots/Steller%20report.jpg)
+![Error Type 1](level-2-screenshots/error-handling.jpg.jpg)
 
 ### Error Type 2: Wallet extension not installed
 When user clicks xBull or Albedo which are not installed.
-![Error Type 2](level-2-screenshots/call%20connect.jpg)
+![Error Type 2](level-2-screenshots/error-rejected.jpg.jpg)
 
 ### Error Type 3: User rejected wallet connection
 When user cancels the wallet connection request.
-![Error Type 3](level-2-screenshots/wallet%20selection.jpg)
+![Error Type 3](level-2-screenshots/wallet-options.jpg.jpg)
 
 ## 📜 Smart Contract
 - Contract ID: CDZZQYUKOSTHDOUCU273NHRVYJ67A37JC5SL3JAOJ77FUT4KGQXSJBUI
 - Network: Stellar Testnet
 - Type: WASM Contract
 - Called from frontend via Soroban RPC
+- Contract Link: https://stellar.expert/explorer/testnet/contract/CDZZQYUKOSTHDOUCU273NHRVYJ67A37JC5SL3JAOJ77FUT4KGQXSJBUI
 - 🔗 [View Deployed Contract on Stellar Expert](https://stellar.expert/explorer/testnet/contract/CDZZQYUKOSTHDOUCU273NHRVYJ67A37JC5SL3JAOJ77FUT4KGQXSJBUI)
 
 ## 🚀 Setup Instructions
@@ -68,19 +69,20 @@ When user cancels the wallet connection request.
 ## 📸 Screenshots
 
 ### 1. Wallet Options
-![Wallet Options](level-2-screenshots/wallet%20selection.jpg)
+![Wallet Options](level-2-screenshots/wallet-options.jpg.jpg)
 
 ### 2. Wallet Connected
-![Wallet Connected](level-2-screenshots/app-running.jpg)
+![Wallet Connected](level-2-screenshots/wallet-connected.jpg.jpg)
 
 ### 3. Smart Contract Called
-![Smart Contract Called](level-2-screenshots/live%20activity%20feed.jpg)
+![Smart Contract Called](level-2-screenshots/contract-called.jpg.jpg)
 
 ### 4. Transaction Success
-![Transaction Success](level-2-screenshots/successful%20tracsaction.jpg)
+![Transaction Success](level-2-screenshots/transaction-success.jpg.jpg)
 
 ## 🔗 Testnet Transaction Proof
 - Transaction Hash: `55da28143fc47e09bc1709a2130c449d61e58ba25256a9c5440bd198779163d8`
+- Transaction Link: https://stellar.expert/explorer/testnet/tx/55da28143fc47e09bc1709a2130c449d61e58ba25256a9c5440bd198779163d8
 - [View on Stellar Explorer](https://stellar.expert/explorer/testnet/tx/55da28143fc47e09bc1709a2130c449d61e58ba25256a9c5440bd198779163d8)
 
 ---
