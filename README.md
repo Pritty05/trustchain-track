@@ -32,9 +32,10 @@ TrustChain Track is an upgraded Stellar blockchain dApp that supports multiple w
 - Error Type 3: User rejected wallet connection
 
 ## 📜 Smart Contract
-- Contract ID: CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCN4
+- Contract ID: CDZZQYUKOSTHDOUCU273NHRVYJ67A37JC5SL3JAOJ77FUT4KGQXSJBUI
 - Network: Stellar Testnet
 - Called from frontend via Soroban RPC
+- 🔗 [View Deployed Contract on Stellar Expert](https://stellar.expert/explorer/testnet/contract CDZZQYUKOSTHDOUCU273NHRVYJ67A37JC5SL3JAOJ77FUT4KGQXSJBUI)
 
 ## 🚀 Setup Instructions
 
@@ -75,5 +76,8 @@ TrustChain Track is an upgraded Stellar blockchain dApp that supports multiple w
 ![Transaction Success](level-2-screenshots/transaction-success.jpg.jpg)
 
 ## 🔗 Testnet Transaction Proof
-View on Stellar Explorer:
-https://stellar.expert/explorer/testnet
+- Transaction Hash: `55da28143fc47e09bc1709a2130c449d61e58ba25256a9c5440bd198779163d8`
+- 🔗 [View on Stellar Explorer](https://stellar.expert/explorer/testnet/tx 55da28143fc47e09bc1709a2130c449d61e58ba25256a9c5440bd198779163d8)
+
+---
+Made with ❤️ for the Stellar Community 🚀
