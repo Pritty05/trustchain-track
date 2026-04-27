@@ -31,15 +31,15 @@ TrustChain Track is an upgraded Stellar blockchain dApp that supports multiple w
 
 ### Error Type 1: Account not found on testnet
 When wallet address doesn't exist on Stellar testnet.
-![Error Type 1](level-2-screenshots/error-handling.jpg.jpg)
+![Error Type 1](level%202%20screenshots/Wallet%20Address%20not%20found%20on%20stell....jpg)
 
 ### Error Type 2: Wallet extension not installed
 When user clicks xBull or Albedo which are not installed.
-![Error Type 2](level-2-screenshots/error-rejected.jpg.jpg)
+![Error Type 2](level%202%20screenshots/Wallet%20Extension%20not%20installed.jpg)
 
 ### Error Type 3: User rejected wallet connection
 When user cancels the wallet connection request.
-![Error Type 3](level-2-screenshots/wallet-options.jpg.jpg)
+![Error Type 3](level%202%20screenshots/User%20Can.jpg)
 
 ## 📜 Smart Contract
 
@@ -145,16 +145,16 @@ npm run dev
 ## 📸 Screenshots
 
 ### 1. Wallet Options
-![Wallet Options](level-2-screenshots/wallet-options.jpg.jpg)
+![Wallet Options](level%202%20screenshots/Wallet%20Options.jpg)
 
 ### 2. Wallet Connected
-![Wallet Connected](level-2-screenshots/wallet-connected.jpg.jpg)
+![Wallet Connected](level%202%20screenshots/Wallet%20Connected.jpg)
 
 ### 3. Smart Contract Called
-![Smart Contract Called](level-2-screenshots/contract-called.jpg.jpg)
+![Smart Contract Called](level%202%20screenshots/Smart%20Contract%20Called.jpg)
 
 ### 4. Transaction Success
-![Transaction Success](level-2-screenshots/transaction-success.jpg.jpg)
+![Transaction Success](level%202%20screenshots/Transaction%20Success.jpg)
 
 ## 🔗 Testnet Transaction Proof
 - **Transaction Hash:** `3313802f198a4351e6060ee8c4b460d1fab18a87022833768f08d41e9a265f51`
