@@ -14,7 +14,7 @@ import {
 
 const HORIZON_URL = "https://horizon-testnet.stellar.org";
 const RPC_URL = "https://soroban-testnet.stellar.org";
-const CONTRACT_ID = "CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCN4";
+const CONTRACT_ID = "CA7S27CDLIGZMZT3FMBROSGCJRP4BNPWDXUN5MKTKOVX3RGAGLSVT4EA";
 
 const SUPPORTED_WALLETS = [
   { id: "freighter", name: "Freighter", icon: "⚡" },
