@@ -31,7 +31,7 @@ TrustChain Track is an upgraded Stellar blockchain dApp that supports multiple w
 
 ### Error Type 1: Account not found on testnet
 When wallet address doesn't exist on Stellar testnet.
-![Error Type 1](level%202%20screenshots/Wallet%20Address%20not%20found%20on%20stell....jpg)
+![Error Type 1](level%202%20screenshots/Wallet%20Address%20not%20found%20on%20steller.jpg)
 
 ### Error Type 2: Wallet extension not installed
 When user clicks xBull or Albedo which are not installed.
